@@ -57,6 +57,32 @@
         color: red;
       }
 
+      .loading {
+        display: none;
+        text-align: center;
+      }
+
+      .loading:before {
+        content: "";
+        display: inline-block;
+        margin-right: 5px;
+        border: 2px solid #ccc;
+        border-radius: 50%;
+        border-top: 2px solid #3498db;
+        width: 15px;
+        height: 15px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
       @media (max-width: 768px) {
         .container {
           max-width: 90%;
@@ -67,6 +93,7 @@
   <body>
     <div class="container">
       <h1>Upload Multiple Files</h1>
+      <div class="loading" id="loading"></div>
       <input type="file" id="file-input" multiple />
       <ul id="file-list"></ul>
     </div>
@@ -75,36 +102,40 @@
       // JavaScript for handling file uploads and removal
       const fileInput = document.getElementById("file-input");
       const fileList = document.getElementById("file-list");
+      const loading = document.getElementById("loading");
 
       fileInput.addEventListener("change", handleFileUpload);
-      function truncateString(str, num) {
-        return str;
-      }
+
       function handleFileUpload(event) {
         const files = event.target.files;
         fileList.innerHTML = ""; // Clear the existing list
+        loading.style.display = "block"; // Show loading animation
 
-        for (let i = 0; i < files.length; i++) {
-          const file = files[i];
-          const listItem = document.createElement("li");
-          listItem.classList.add("file-item");
+        // Simulate an upload delay (you can replace this with actual file upload code)
+        setTimeout(() => {
+          loading.style.display = "none"; // Hide loading animation
+          for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const listItem = document.createElement("li");
+            listItem.classList.add("file-item");
 
-          const fileName = document.createElement("span");
-          fileName.classList.add("file-name");
-          fileName.textContent = file.name.slice(0, 15) + "...";
+            const fileName = document.createElement("span");
+            fileName.classList.add("file-name");
+            fileName.textContent = file.name;
 
-          const removeButton = document.createElement("span");
-          removeButton.classList.add("remove-button");
-          removeButton.textContent = "Remove";
-          removeButton.addEventListener("click", () => {
-            listItem.remove();
-          });
+            const removeButton = document.createElement("span");
+            removeButton.classList.add("remove-button");
+            removeButton.textContent = "Remove";
+            removeButton.addEventListener("click", () => {
+              listItem.remove();
+            });
 
-          listItem.appendChild(fileName);
-          listItem.appendChild(removeButton);
+            listItem.appendChild(fileName);
+            listItem.appendChild(removeButton);
 
-          fileList.appendChild(listItem);
-        }
+            fileList.appendChild(listItem);
+          }
+        }, 2000); // Simulated upload time (2 seconds)
       }
     </script>
   </body>
