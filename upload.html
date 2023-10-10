@@ -121,7 +121,7 @@
 
             const fileName = document.createElement("span");
             fileName.classList.add("file-name");
-            fileName.textContent = file.name;
+            fileName.textContent =  file.name.slice(0,15)+"...";
 
             const removeButton = document.createElement("span");
             removeButton.classList.add("remove-button");
