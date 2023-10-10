@@ -1,150 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Send Super Big Files</title>
+    <title>Multiple File Upload</title>
     <style>
-      * {
-        box-sizing: border-box;
-        font-family: Arial;
-        /* font-size:1em; */
-      }
       body {
         font-family: Arial, sans-serif;
         background-color: #2196f3;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
         margin: 0;
+        padding: 0;
       }
 
       .container {
+        max-width: 600px;
+        margin: 66px auto;
+        padding: 20px;
         background-color: #fff;
-        padding: 2rem;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+        border: 7px dashed #2196f3;
+        border-radius: 48px;
       }
 
       h1 {
-        font-size: 2rem;
-        color: #333;
-        margin-bottom: 1rem;
-      }
-
-      p {
-        font-size: 1.125rem;
-        color: #666;
-        margin-bottom: 1.5rem;
-      }
-
-      .dropzone {
-        background-color: #f0f0f0;
-        border: 2px dashed #ccc;
-        border-radius: 10px;
-        padding: 2rem;
         text-align: center;
-        cursor: pointer;
-        transition: background-color 0.3s;
       }
 
-      .dropzone:hover {
-        background-color: #e0e0e0;
+      #file-input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
       }
 
-      .dropzone input[type="file"] {
-        display: none;
-      }
-
-      .dropzone label {
-        font-size: 1.25rem;
-        color: #333;
-        cursor: pointer;
-      }
-
-      .dropzone i {
-        font-size: 2rem;
-        color: #ccc;
-        margin-bottom: 1rem;
-      }
       #file-list {
-        display: grid;
+        list-style-type: none;
+        padding: 0;
       }
-      .file_row {
+
+      .file-item {
         display: flex;
         align-items: center;
-        height: 38px;
-        margin: 5px;
-        padding: 5px;
-        background-color: #85c7fdcc;
-        position: relative;
-        border-radius: 11px;
+        justify-content: space-between;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        margin-bottom: 10px;
+      }
+
+      .file-name {
+        flex: 1;
+      }
+
+      .remove-button {
+        cursor: pointer;
+        color: red;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          max-width: 90%;
+        }
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>Send Super Big Files</h1>
-      <p>
-        Select multiple files to upload, and you can discard them individually.
-      </p>
-      <form action="/upload" method="post" enctype="multipart/form-data">
-        <!-- Allow multiple file selection -->
-        <input type="file" id="file" name="file" multiple />
-        <button type="button" id="discard-all">Discard All</button>
-        <br />
-        <div id="file-list"></div>
-      </form>
+      <h1>Upload Multiple Files</h1>
+      <input type="file" id="file-input" multiple />
+      <ul id="file-list"></ul>
     </div>
 
     <script>
-        const fileInput = document.getElementById('file');
-        const fileList = document.getElementById('file-list');
-        const discardAllButton = document.getElementById('discard-all');
+      // JavaScript for handling file uploads and removal
+      const fileInput = document.getElementById("file-input");
+      const fileList = document.getElementById("file-list");
 
-        fileInput.addEventListener('change', () => {
-            // Get the current list of files or create an empty array
-            const currentFiles = Array.from(fileInput.files || []);
+      fileInput.addEventListener("change", handleFileUpload);
+      function truncateString(str, num) {
+        return str;
+      }
+      function handleFileUpload(event) {
+        const files = event.target.files;
+        fileList.innerHTML = ""; // Clear the existing list
 
-            // Clear the file list before adding new files
-            fileList.innerHTML = '';
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const listItem = document.createElement("li");
+          listItem.classList.add("file-item");
 
-            for (const file of currentFiles) {
-                const fileItem = document.createElement('div');
-                fileItem.textContent = file.name;
+          const fileName = document.createElement("span");
+          fileName.classList.add("file-name");
+          fileName.textContent = file.name.slice(0, 15) + "...";
 
-                // Add a "Remove" button to allow discarding individual files
-                const removeButton = document.createElement('button');
-                removeButton.textContent = 'Remove';
-                removeButton.addEventListener('click', () => {
-                    // Remove the file from the currentFiles array
-                    const index = currentFiles.indexOf(file);
-                    if (index !== -1) {
-                        currentFiles.splice(index, 1);
-                    }
+          const removeButton = document.createElement("span");
+          removeButton.classList.add("remove-button");
+          removeButton.textContent = "Remove";
+          removeButton.addEventListener("click", () => {
+            listItem.remove();
+          });
 
-                    // Update the file input's value and re-trigger the change event
-                    fileInput.value = '';
-                    fileInput.files = currentFiles;
+          listItem.appendChild(fileName);
+          listItem.appendChild(removeButton);
 
-                    // Remove the file item from the list
-                    fileList.removeChild(fileItem);
-                });
-                const fileRow = document.createElement('div');
-                fileRow.innerHTML='<span style="padding-right: 218px;">'+file.name+'</span><span><button  style="margin-right: 50px;">Remove</button><button>Download</button></span>';
-                fileRow.classList.add('file_row');
-                fileItem.appendChild(removeButton);
-                fileList.appendChild(fileRow);
-            }
-        });
-        
-
-        // Event listener for discarding all files
-        discardAllButton.addEventListener('click', () => {
-            fileInput.value = ''; // Clear the file input
-            fileList.innerHTML = ''; // Clear the file list
-        });
+          fileList.appendChild(listItem);
+        }
+      }
     </script>
   </body>
 </html>
