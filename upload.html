@@ -99,6 +99,7 @@
     </div>
 
     <script>
+      // JavaScript for handling file uploads and removal
       document.addEventListener("DOMContentLoaded", function () {
         const fileInput = document.getElementById("file-input");
         const fileList = document.getElementById("file-list");
@@ -137,12 +138,12 @@
 
               listItem.appendChild(fileName);
               listItem.appendChild(removeButton);
-
               fileList.appendChild(listItem);
             }
           }, 2000); // Simulated upload time (2 seconds)
         }
       });
     </script>
+    
   </body>
 </html>
