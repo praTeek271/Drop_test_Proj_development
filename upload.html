@@ -94,7 +94,8 @@
     <div class="container">
       <h1>Upload Multiple Files</h1>
       <div class="loading" id="loading"></div>
-      <input type="file" id="file-input" multiple />
+      <input type="file" id="file-input" multiple style="display: none;" />
+      <button id="select-files">Select Files</button>
       <ul id="file-list"></ul>
     </div>
 
@@ -103,6 +104,11 @@
       const fileInput = document.getElementById("file-input");
       const fileList = document.getElementById("file-list");
       const loading = document.getElementById("loading");
+      const selectFilesButton = document.getElementById("select-files");
+
+      selectFilesButton.addEventListener("click", () => {
+        fileInput.click();
+      });
 
       fileInput.addEventListener("change", handleFileUpload);
 
@@ -121,7 +127,7 @@
 
             const fileName = document.createElement("span");
             fileName.classList.add("file-name");
-            fileName.textContent =  file.name.slice(0,15)+"...";
+            fileName.textContent = file.name.slice(0, 15) + "...";
 
             const removeButton = document.createElement("span");
             removeButton.classList.add("remove-button");
