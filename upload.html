@@ -100,51 +100,51 @@
     </div>
 
     <script>
-      // JavaScript for handling file uploads and removal
-      const fileInput = document.getElementById("file-input");
-      const fileList = document.getElementById("file-list");
-      const loading = document.getElementById("loading");
-      const selectFilesButton = document.getElementById("select-files");
+  // JavaScript for handling file uploads and removal
+  const fileInput = document.getElementById("file-input");
+  const fileList = document.getElementById("file-list");
+  const loading = document.getElementById("loading");
+  const selectFilesButton = document.getElementById("select-files");
 
-      selectFilesButton.addEventListener("click", () => {
-        fileInput.click();
-      });
+  selectFilesButton.addEventListener("click", () => {
+    fileInput.click();
+  });
 
-      fileInput.addEventListener("change", handleFileUpload);
+  fileInput.addEventListener("change", handleFileUpload);
 
-      function handleFileUpload(event) {
-        const files = event.target.files;
-        fileList.innerHTML = ""; // Clear the existing list
-        loading.style.display = "block"; // Show loading animation
+  function handleFileUpload(event) {
+    const files = event.target.files;
+    fileList.innerHTML = ""; // Clear the existing list
+    loading.style.display = "block"; // Show loading animation
 
-        // Simulate an upload delay (you can replace this with actual file upload code)
-        setTimeout(() => {
-          loading.style display = "none"; // Hide loading animation
-          for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const listItem = document.createElement("li");
-            listItem.classList.add("file-item");
+    // Simulate an upload delay (you can replace this with actual file upload code)
+    setTimeout(() => {
+      loading.style.display = "none"; // Hide loading animation
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const listItem = document.createElement("li");
+        listItem.classList.add("file-item");
 
-            const fileName = document.createElement("span");
-            fileName.classList.add("file-name");
-            fileName.textContent = file.name.slice(0, 15) + "...";
+        const fileName = document.createElement("span");
+        fileName.classList.add("file-name");
+        fileName.textContent = file.name.slice(0, 15) + "...";
 
-            const removeButton = document.createElement("span");
-            removeButton.classList.add("remove-button");
-            removeButton.textContent = "Remove";
-            removeButton.addEventListener("click", () => {
-              listItem.remove();
-            });
+        const removeButton = document.createElement("span");
+        removeButton.classList.add("remove-button");
+        removeButton.textContent = "Remove";
+        removeButton.addEventListener("click", () => {
+          listItem.remove();
+        });
 
-            listItem.appendChild(fileName);
-                    listItem.appendChild(removeButton);
+        listItem.appendChild(fileName);
+        listItem.appendChild(removeButton);
 
         fileList.appendChild(listItem);
       }
-    }
-    </script> <!-- Add this closing script tag here -->
-  </body>
-</html>
+    }, 2000); // Simulated upload time (2 seconds)
+  }
+</script>
+
 
 
 
