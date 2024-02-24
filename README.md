@@ -2,6 +2,7 @@
 This Repo consists of the following files :
 - .git
 - index.html
+- README.md
 - style.css
 - style.js
 - test.js
@@ -13,8 +14,8 @@ This Repo consists of the following files :
 - --->This is a test repository created by @prateek271
 <br><br>
 ---
-<br><br>### Features of the project:
+<br><br>###	Features of the project:
 <br>
 
 
-- supports linux
+-  created by prateek
