@@ -1,4 +1,4 @@
-# Drop_test_Proj_development
+# drop_test_proj_development
 This Repo consists of the following files :
 - .git
 - index.html
@@ -20,4 +20,4 @@ This Repo consists of the following files :
 <br>
 
 
-- uses time module
+- supports linux
